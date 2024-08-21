@@ -1,0 +1,24 @@
+﻿@page
+@model TopTenMovies_RazorPages.Pages.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    ViewData["PageTitle"] = "DETAILS FOR: " + @Model.Movie.Title;
+}
+
+<section class="box">
+    <div class="header-box">
+        <div class="details-rating">@Model.Movie.Rating</div>
+        <div class="details-genre">@Model.Movie.Genre</div>
+        <img class="details-posterUrl" src="@Model.Movie.PosterUrl">
+        <div class="details-year">@Model.Movie.Year</div>
+        <div class="details-director">@Model.Movie.Director</div>
+    </div>
+    <div class="details-description">@Model.Movie.Description</div>
+    <div class="button-container">
+        <a class="edit-button" asp-page="./Edit" asp-route-id="@Model.Movie.Id">Edit</a>
+        <a class="delete-button" asp-page="./Delete" asp-route-id="@Model.Movie.Id">Delete</a>
+    </div>
+</section>
+
+<script src="~/js/details.js"></script>

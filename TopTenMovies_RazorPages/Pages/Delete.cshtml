@@ -1,0 +1,30 @@
+﻿@page
+@model TopTenMovies_RazorPages.Pages.DeleteModel
+@{
+    ViewData["Title"] = "Delete";
+    ViewData["PageTitle"] = "REMOVE: " + Model.Movie.Title + "?";
+    ViewData["ShowAddButton"] = false;
+    ViewData["ShowBackButton"] = true;
+}
+
+<section class="box">
+    <div class="delete-box">
+        <h1 class="delete-title">@Model.Movie.Title</h1>
+        <div class="delete-rating">Rating: @Model.Movie.Rating</div>
+        <div class="delete-genre">Genre: @Model.Movie.Genre</div>
+        <img class="delete-posterUrl" src="@Model.Movie.PosterUrl" alt="Movie Poster">
+        <div class="delete-year">Year: @Model.Movie.Year</div>
+        <div class="delete-director">Director: @Model.Movie.Director</div>
+        <div></div>
+    </div>
+    <div class="delete-form-box">
+        <p class="notification">Are you sure you want to delete this movie?</p>
+        <form method="post">
+            <input type="hidden" asp-for="Movie.Id" />
+            <div class="button-container">
+                <button type="submit">Delete</button>
+                <a class="btn btn-secondary" asp-page="/Index">Cancel</a>
+            </div>
+        </form>
+    </div>
+</section>

@@ -1,0 +1,19 @@
+﻿@page
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Movie";
+    ViewData["PageTitle"] = "LIST OF TOP RATING MOVIES OF ALL TIMES";
+}
+
+@foreach (var movie in Model.Movies)
+{
+    <a href="@Url.Page("/Details", new { id = movie.Id })" class="item">
+        <div class="posterUrl" style="background-image:url('@movie.PosterUrl');"></div>
+        <div class="rating">@movie.Rating</div>
+        <div class="title">@movie.Title</div>
+        <div class="year">@movie.Year</div>
+    </a>
+}
+
+<script src="~/js/movie.js"></script>

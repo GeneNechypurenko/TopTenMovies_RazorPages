@@ -1,0 +1,14 @@
+﻿<header>
+    <h2>@ViewData["PageTitle"]</h2>
+    @if (Model != null)
+    {
+        if (Model.GetType().GetProperty("ShowAddButton")?.GetValue(Model) is bool showAddButton && showAddButton)
+        {
+            <button class="add-button" role="button" onclick="location.href='@Url.Page("/Add")'">Add New Movie</button>
+        }
+        else if (Model.GetType().GetProperty("ShowBackButton")?.GetValue(Model) is bool showBackButton && showBackButton)
+        {
+            <button class="back-button" role="button" onclick="window.history.back()">Back</button>
+        }
+    }
+</header>

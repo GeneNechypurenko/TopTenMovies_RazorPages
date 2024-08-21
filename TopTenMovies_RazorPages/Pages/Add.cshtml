@@ -1,0 +1,81 @@
+﻿@page
+@model AddModel
+
+@{
+    ViewData["Title"] = "Add New Movie";
+}
+
+<section class="edit-container">
+    <section class="form-box">
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label asp-for="Movie.Title"></label>
+                <input asp-for="Movie.Title" class="form-control" required oninput="updatePreview()" />
+                <span asp-validation-for="Movie.Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Movie.Rating"></label>
+                <input asp-for="Movie.Rating" type="number" step="0.1" class="form-control" min="0.0" max="9.9" required oninput="updatePreview()" />
+                <span asp-validation-for="Movie.Rating" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Movie.Genre"></label>
+                <input asp-for="Movie.Genre" class="form-control" required oninput="updatePreview()" />
+                <span asp-validation-for="Movie.Genre" class="text-danger"></span>
+            </div>
+
+            <div class="upload">
+                <label for="input-file" id="drop-area">
+                    <input type="file" id="input-file" name="Poster" hidden onchange="previewImage(event)" />
+                    <div id="image-view">
+                        <img src="~/background/upload.png" />
+                        <p>Drag and drop or click here<br />to upload image</p>
+                    </div>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Movie.Year"></label>
+                <input asp-for="Movie.Year" type="number" class="form-control" min="1900" max="@(DateTime.Now.Year)" required oninput="updatePreview()" />
+                <span asp-validation-for="Movie.Year" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Movie.Director"></label>
+                <input asp-for="Movie.Director" class="form-control" required oninput="updatePreview()" />
+                <span asp-validation-for="Movie.Director" class="text-danger"></span>
+            </div>
+
+            <div class="description">
+                <label asp-for="Movie.Description"></label>
+                <textarea asp-for="Movie.Description" class="form-control" required oninput="updatePreview()"></textarea>
+                <span asp-validation-for="Movie.Description" class="text-danger"></span>
+            </div>
+
+            <div class="button-container">
+                <button type="submit">Accept</button>
+                <button type="button" id="clear-button">Clear</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="preview-box">
+        <div class="preview-title">
+            <h1 class="add-title">Your Movie Title</h1>
+        </div>
+        <div class="preview-group">
+            <div class="preview-rating">IMDb: 9.9</div>
+            <div class="preview-genre">genre</div>
+            <img class="preview-posterUrl" id="output-file" src="~/background/default-poster.jpg" />
+            <div class="preview-year">@(DateTime.Now.Year)</div>
+            <div class="preview-director">Movie Director</div>
+        </div>
+        <div class="preview-description">
+            <div class="add-description">Your movie description is here...</div>
+        </div>
+    </section>
+</section>
+
+<script src="~/js/add.js"></script>

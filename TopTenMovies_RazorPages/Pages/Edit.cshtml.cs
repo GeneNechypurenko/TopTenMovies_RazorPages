@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System.Threading.Tasks;
 using TopTenMovies_RazorPages.Models;
 using TopTenMovies_RazorPages.Models.Data;
 
@@ -23,22 +26,12 @@ namespace TopTenMovies_RazorPages.Pages
         {
             Movie = await _context.Movies.FindAsync(id);
 
-            if (Movie == null)
-            {
-                return NotFound();
-            }
-
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(IFormFile poster)
+        public async Task<IActionResult> OnPostAsync(int id, IFormFile poster)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            var movieToUpdate = await _context.Movies.FindAsync(Movie.Id);
+            var movieToUpdate = await _context.Movies.FindAsync(id);
 
             if (movieToUpdate == null)
             {
@@ -55,19 +48,19 @@ namespace TopTenMovies_RazorPages.Pages
                         System.IO.File.Delete(oldPath);
                     }
                 }
+                var fileName = Path.GetFileName(poster.FileName);
+                var path = Path.Combine(_environment.WebRootPath, "images", fileName);
 
-                string path = "/images/" + poster.FileName;
-
-                using (var fs = new FileStream(Path.Combine(_environment.WebRootPath, path), FileMode.Create))
+                using (var fs = new FileStream(path, FileMode.Create))
                 {
                     await poster.CopyToAsync(fs);
                 }
 
-                movieToUpdate.PosterUrl = path;
+                movieToUpdate.PosterUrl = $"/images/{fileName}";
             }
             else
             {
-                movieToUpdate.PosterUrl = Movie.PosterUrl;
+                movieToUpdate.PosterUrl = movieToUpdate.PosterUrl;
             }
 
             movieToUpdate.Title = Movie.Title;

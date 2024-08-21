@@ -10,6 +10,9 @@
 <section class="edit-container">
     <section class="form-box">
         <form method="post" enctype="multipart/form-data">
+
+            <input type="hidden" asp-for="Movie.Id" />
+
             <div class="form-group">
                 <label asp-for="Movie.Title"></label>
                 <input asp-for="Movie.Title" class="form-control" required oninput="updatePreview()" />
